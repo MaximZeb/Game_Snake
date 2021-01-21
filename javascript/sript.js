@@ -13,6 +13,17 @@ let speed = 0.9;
 let intervalTime = 0;
 let ineterval = 0;
 
+//  запуск и перезапуск игры 
+function startGame() {
+	
+}
+
+
+
+
+
+
+
 // доступ к функции нажатие кода
 function control(e) {
 	squeres[currentIndex].classList.remove('snake');
