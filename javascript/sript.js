@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 const squeres = docuement.querySelectorAll('.grid div');
-const scoreDisplay =docuement.querySelector('span');
+const scoreDisplay = docuement.querySelector('span');
 const srartBtn = document.querySelector('.start');
 
 const width = 10;
@@ -15,8 +15,16 @@ let ineterval = 0;
 
 //  запуск и перезапуск игры 
 function startGame() {
+	currentSnake.forEach(index => squeres[index].classList.remove('snake'));
+	squeres[appleIndex].classList.remove('apple');
+	clearInterval(interval);
+	score = 0;
+	direction = 1;
+	scoreDisplay.innerText = score;
+	// случайное яблоко
 	
-}
+
+}	
 
 
 
