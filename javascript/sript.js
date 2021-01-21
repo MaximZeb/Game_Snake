@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-const squeres = docuement.querySelectorAll('.grid div');
-const scoreDisplay = docuement.querySelector('span');
-const srartBtn = document.querySelector('.start');
+const squeres = document.querySelectorAll('.grid div');
+const scoreDisplay = document.querySelector('span');
+const startBtn = document.querySelector('.start');
 
 const width = 10;
 let currentIndex = 0;
@@ -11,7 +11,7 @@ let direction = 1;
 let score = 0;
 let speed = 0.9;
 let intervalTime = 0;
-let ineterval = 0;
+let interval = 0;
 
 //  запуск и перезапуск игры 
 function startGame() {
@@ -20,6 +20,7 @@ function startGame() {
 	clearInterval(interval);
 	score = 0;
 	// случайное яблоко
+	randomApple();
 	direction = 1;
 	scoreDisplay.innerText = score;
 	intervalTime = 1000;
@@ -37,30 +38,36 @@ function moveOutcomes() {
 		(currentSnake[0] % width === width -1 && direction === 1) || // если змея ползет вправо
 		(currentSnake[0] % width === 0 && direction === -1) || // если змея ползет в лево
 		(currentSnake[0] - width < 0 && direction === -width) ||// усли змея ползет верх
-		squeres[currentSnake[0]] + direction.classList.contains('snake')
+		squeres[currentSnake[0] + direction].classList.contains('snake')
 		) {
 			return clearInterval(interval);
 	}
 
 const tail = currentSnake.pop();
 squeres[tail].classList.remove('snake');
-currentSnake.unshift(currentSnake[0] + direction)
+currentSnake.unshift(currentSnake[0] + direction);
 
 if(squeres[currentSnake[0]].classList.contains('apple')) {
-	squeres[currentSnake[0]].classLsit.remove('apple');
-	squeres[tail].classList.add('snake');
-	currentSnake.push(tail);
-	//  случайное яблоко
-	score++;
-	scoreDisplay.textContent = score;
-	clearInterval(interval);
-	intervalTime = intervalTime * speed;
-	interval = setInterval(moveOutcomes, intervalTime);
-}
+      squeres[currentSnake[0]].classList.remove('apple')
+      squeres[tail].classList.add('snake')
+      currentSnake.push(tail)
+      randomApple()
+      score++
+      scoreDisplay.textContent = score
+      clearInterval(interval)
+      intervalTime = intervalTime * speed
+      interval = setInterval(moveOutcomes, intervalTime)
+    }
+    squeres[currentSnake[0]].classList.add('snake')
+  }
 
-
-}
-
+// генерация нового яблока
+function randomApple() {
+    do{
+      appleIndex = Math.floor(Math.random() * squeres.length)
+    } while(squeres[appleIndex].classList.contains('snake')) //making sure apples dont appear on the snake
+    squeres[appleIndex].classList.add('apple')
+  }
 
 
 
@@ -78,4 +85,9 @@ function control(e) {
 		direction = +width;
 	}
 }
+
+document.addEventListener('keyup', control);
+startBtn.addEventListener('click', startGame);
+
+
 })
